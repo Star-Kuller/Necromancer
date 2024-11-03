@@ -56,13 +56,13 @@ namespace Models
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             Debug.Log("Enter: " + other.name);
             Targets.Add(other.transform);
         }
         
-        private void OnTriggerExit(Collider other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             Debug.Log("Exit: " + other.name);
             Targets.Remove(other.transform);
