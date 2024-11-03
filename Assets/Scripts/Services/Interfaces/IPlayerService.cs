@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Services.Interfaces
 {
-    public interface IPlayerManager : IService
+    public interface IPlayerService : IService
     {
         public float Health { get; set; }
         public float Mana { get; set; }

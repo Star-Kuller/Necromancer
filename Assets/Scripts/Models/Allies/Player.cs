@@ -1,23 +1,29 @@
 using System;
+using Models.AI;
+using Services.EventBus;
 using Services.Interfaces;
+using Services.ServiceLocator;
 using UnityEngine;
 
-namespace Services
+namespace Models.Allies
 {
-    public class PlayerManager : MonoBehaviour, IPlayerManager
+    public class Player : Alive, IPlayerService
     {
-        public float Health
+        public override float Health
         {
             get => health;
             set
             {
-                if (health >= 0)
+                if(value < health)
+                    _eventBus.CallEvent(EventList.PlayerReceivedDamage);
+                
+                if (health > 0)
                     health = value;
                 else
-                    throw new ArgumentException("Здоровье не может быть меньше 0.");
+                    _eventBus.CallEvent(EventList.PlayerDead);
             }
         }
-
+        
         public float Mana
         {
             get => mana;
@@ -35,10 +41,13 @@ namespace Services
         [SerializeField] private float health = 100;
         [SerializeField] private float mana = 20;
 
+        private IEventBus _eventBus;
+
         private void Awake()
         {
-            var services = ServiceLocator.ServiceLocator.Current;
-            services.Register<IPlayerManager>(this);
+            var services = ServiceLocator.Current;
+            services.Register<IPlayerService>(this);
+            _eventBus = services.Get<IEventBus>();
         }
     }
 }

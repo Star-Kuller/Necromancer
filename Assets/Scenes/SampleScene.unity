@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 153005694}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 160668061}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,12 +331,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0bcc3a48a34a6419fcc9062aa4ab8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 0
   currentState: 1
   patrolSpeed: 2
-  chaseSpeed: 4
-  attackRange: 2
-  patrolPoints: []
-  player: {fileID: 153005693}
+  chaseSpeed: 3
+  minAttackRange: 4
+  maxAttackRange: 5
+  damage: 5
+  attackSpeed: 5
+  patrolWay: []
 --- !u!58 &160668057
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1284,16 +1287,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -6, y: -2, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -5, y: -2, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 1
@@ -2487,15 +2480,15 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 162
+  - m_RefCount: 161
     m_Data: {fileID: 11400000, guid: eafa59262cec18d408697ec02b77bf6c, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 162
+  - m_RefCount: 161
     m_Data: {fileID: 21300000, guid: 824c8e45b649d1d43bd313c9cbf06ef8, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 162
+  - m_RefCount: 161
     m_Data:
       e00: 1
       e01: 0
@@ -2514,7 +2507,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 162
+  - m_RefCount: 161
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
