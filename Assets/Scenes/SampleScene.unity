@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 153005699}
   - component: {fileID: 153005698}
   - component: {fileID: 153005694}
+  - component: {fileID: 153005700}
   m_Layer: 0
   m_Name: Player
   m_TagString: Ally
@@ -298,6 +299,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.15}
   m_Radius: 0.1
+--- !u!114 &153005700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153005692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a3cd589746430b8ea2dfb2eef06b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  mana: 20
 --- !u!1 &160668055
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,36 +325,16 @@ GameObject:
   - component: {fileID: 160668059}
   - component: {fileID: 160668058}
   - component: {fileID: 160668057}
-  - component: {fileID: 160668056}
   - component: {fileID: 160668061}
+  - component: {fileID: 160668062}
+  - component: {fileID: 160668063}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Hillbilly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &160668056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 160668055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c0bcc3a48a34a6419fcc9062aa4ab8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 0
-  currentState: 1
-  patrolSpeed: 2
-  chaseSpeed: 3
-  minAttackRange: 4
-  maxAttackRange: 5
-  damage: 5
-  attackSpeed: 5
-  patrolWay: []
 --- !u!58 &160668057
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -504,6 +499,40 @@ NavMeshAgent:
   m_BaseOffset: 0.26
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &160668062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160668055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a180c5e02850476d94a1bff6be4ef58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  currentState: 0
+  patrolSpeed: 2
+  chaseSpeed: 3
+  minAttackRange: 1
+  maxAttackRange: 2
+  damage: 15
+  attackSpeed: 1
+  patrolWay: []
+--- !u!114 &160668063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160668055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce017796d3b400cbe1702b2bca49f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 20
 --- !u!1 &166880427
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619394802}
   - component: {fileID: 619394801}
+  - component: {fileID: 619394803}
   m_Layer: 0
   m_Name: Global Light 2D
   m_TagString: Untagged
@@ -771,6 +801,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &619394803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619394800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a574d339867c4854b746d2cb8bd8de95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &788950284
 GameObject:
   m_ObjectHideFlags: 0

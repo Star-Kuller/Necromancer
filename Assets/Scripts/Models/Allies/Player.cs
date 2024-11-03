@@ -21,6 +21,9 @@ namespace Models.Allies
                     health = value;
                 else
                     _eventBus.CallEvent(EventList.PlayerDead);
+
+                if (health < 0)
+                    health = 0;
             }
         }
         
@@ -38,12 +41,11 @@ namespace Models.Allies
 
         public Transform PlayerTransform => transform;
         
-        [SerializeField] private float health = 100;
         [SerializeField] private float mana = 20;
 
         private IEventBus _eventBus;
 
-        private void Awake()
+        private void Start()
         {
             var services = ServiceLocator.Current;
             services.Register<IPlayerService>(this);

@@ -31,19 +31,19 @@ namespace Models.AI
             set => currentState = value;
         }
 
-        [SerializeField] protected TeamType team;
+        [SerializeField] protected TeamType team = TeamType.Enemy;
         [SerializeField] protected AIState currentState;
         [SerializeField] protected float patrolSpeed = 2f;
         [SerializeField] protected float chaseSpeed = 3f;
-        [SerializeField] protected float minAttackRange = 4f;
-        [SerializeField] protected float maxAttackRange = 5f;
+        [SerializeField] protected float minAttackRange = 1f;
+        [SerializeField] protected float maxAttackRange = 1.2f;
         [SerializeField] protected float damage = 5f;
-        [SerializeField] protected float attackSpeed = 5f;
+        [SerializeField] protected float attackSpeed = 1f;
         [SerializeField] protected Transform[] patrolWay;
         
         protected int PatrolIndex = 0;
         protected Transform CurrentTarget;
-        protected List<Transform> Tagets = new();
+        protected readonly List<Transform> Targets = new();
 
         private NavMeshAgent _navMeshAgent;
         private List<IDamageable> _targetDamageables = new();
@@ -117,25 +117,38 @@ namespace Models.AI
         // ReSharper disable Unity.PerformanceAnalysis
         protected virtual IEnumerator Attack()
         {
-            if (CurrentTarget is not null)
+            StartCoroutine(CheckDistance());
+            
+            while (CurrentTarget is not null && CurrentState == AIState.Attack)
             {
-                if(!_targetDamageables.Any())
+                if (_targetDamageables is null || !_targetDamageables.Any())
                     _targetDamageables = new List<IDamageable>(CurrentTarget.GetComponents<IDamageable>());
-                
+
                 foreach (var damageable in _targetDamageables)
                 {
                     damageable.GetDamage(damage);
                 }
-                if (Distance(transform.position, CurrentTarget.position) > maxAttackRange)
-                    ChangeState(AIState.Chase);
 
-                yield return new WaitForSeconds( 1 / attackSpeed );
+                yield return new WaitForSeconds(1 / attackSpeed);
             }
-            else
+
+            if (CurrentTarget == null)
             {
                 ChangeState(AIState.Idle);
             }
-            yield return null;
+        }
+        
+        private IEnumerator CheckDistance()
+        {
+            while (CurrentTarget is not null && CurrentState == AIState.Attack)
+            {
+                if (Distance(transform.position, CurrentTarget.position) > maxAttackRange)
+                {
+                    ChangeState(AIState.Chase);
+                    yield break;
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
         }
 
         protected virtual void ChangeState(AIState state)
@@ -146,25 +159,31 @@ namespace Models.AI
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.CompareTag(team.ToString())) return;
+            var enemy = team switch
+            {
+                TeamType.Ally => "Enemy",
+                TeamType.Enemy => "Ally",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            if (!other.CompareTag(enemy)) return;
             
-            Tagets.Add(other.transform);
+            Targets.Add(other.transform);
             UpdateTarget();
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Tagets.Remove(other.transform);
+            Targets.Remove(other.transform);
             UpdateTarget();
         }
         
         protected void UpdateTarget()
         {
-            if (Tagets.Any())
+            if (Targets.Any())
             {
                 Transform nearest = null;
                 var minDistance = float.MaxValue;
-                foreach (var target in Tagets)
+                foreach (var target in Targets)
                 {
                     var distance = Distance(transform.position, target.position);
                     if (!(distance < minDistance)) continue;

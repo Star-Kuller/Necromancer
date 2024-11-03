@@ -16,7 +16,7 @@ namespace Models.AI
             }
         }
         
-        [SerializeField] private float health = 100;
+        [SerializeField] protected float health = 100;
         
         public virtual void GetDamage(float damage)
         {
