@@ -12,7 +12,7 @@ namespace Models.AI
                 if (health > 0)
                     health = value;
                 else
-                    Destroy(this);
+                    Destroy(gameObject);
             }
         }
         

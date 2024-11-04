@@ -8,5 +8,6 @@ namespace Services.Interfaces
         public float Health { get; set; }
         public float Mana { get; set; }
         public Transform PlayerTransform { get; }
+        bool SpentMana(float value);
     }
 }

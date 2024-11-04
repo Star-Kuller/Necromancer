@@ -1,8 +1,10 @@
-using System;
+
+
 using Services.EventBus;
 using Services.Interfaces;
 using Services.ServiceLocator;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelInit : MonoBehaviour
 {
@@ -10,7 +12,9 @@ public class LevelInit : MonoBehaviour
     {
         ServiceLocator.Reset();
         var services = ServiceLocator.Current;
-        
-        services.Register<IEventBus>(new EventBus());
+
+        var eventBus = new EventBus();
+        eventBus.Subscribe(EventList.PlayerDead, () => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+        services.Register<IEventBus>(eventBus);
     }
 }

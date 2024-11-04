@@ -45,11 +45,29 @@ namespace Models.Allies
 
         private IEventBus _eventBus;
 
+        private void Awake()
+        {
+            var services = ServiceLocator.Current;
+            services.TryRegister<IPlayerService>(this);
+        }
+
         private void Start()
         {
             var services = ServiceLocator.Current;
-            services.Register<IPlayerService>(this);
             _eventBus = services.Get<IEventBus>();
+        }
+
+        public bool SpentMana(float value)
+        {
+            try
+            {
+                Mana -= value;
+                return true;
+            }
+            catch (ArgumentException e)
+            {
+                return false;
+            }
         }
     }
 }

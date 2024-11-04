@@ -23,30 +23,27 @@ namespace Models.AI
             Enemy
         }
 
-        public TeamType Team => team;
-
         public AIState CurrentState
         {
             get => currentState;
             set => currentState = value;
         }
 
-        [SerializeField] protected TeamType team = TeamType.Enemy;
+        [SerializeField] protected TeamType attackTeam = TeamType.Ally;
         [SerializeField] protected AIState currentState;
         [SerializeField] protected float patrolSpeed = 2f;
         [SerializeField] protected float chaseSpeed = 3f;
         [SerializeField] protected float minAttackRange = 1f;
-        [SerializeField] protected float maxAttackRange = 1.2f;
+        [SerializeField] protected float maxAttackRange = 1.7f;
         [SerializeField] protected float damage = 5f;
         [SerializeField] protected float attackSpeed = 1f;
         [SerializeField] protected Transform[] patrolWay;
         
         protected int PatrolIndex = 0;
         protected Transform CurrentTarget;
-        protected readonly List<Transform> Targets = new();
+        protected readonly Dictionary<Transform, IDamageable> Targets = new();
 
         private NavMeshAgent _navMeshAgent;
-        private List<IDamageable> _targetDamageables = new();
 
         private void Awake()
         {
@@ -82,7 +79,7 @@ namespace Models.AI
             if (patrolWay.Any())
             {
                 _navMeshAgent.SetDestination(patrolWay[PatrolIndex].position);
-                if (Distance(transform.position, patrolWay[PatrolIndex].position) < 1)
+                if (Distance(transform.position, patrolWay[PatrolIndex].position) < 0.2)
                 {
                     PatrolIndex++;
                     if (PatrolIndex >= patrolWay.Length)
@@ -104,8 +101,9 @@ namespace Models.AI
             {
                 _navMeshAgent.speed = chaseSpeed;
                 _navMeshAgent.SetDestination(CurrentTarget.position);
-                if (Distance(transform.position, CurrentTarget.position) < minAttackRange)
+                if (Distance(transform.position, CurrentTarget.position) <= minAttackRange)
                     ChangeState(AIState.Attack);
+                UpdateTarget();
             }
             else
             {
@@ -114,25 +112,19 @@ namespace Models.AI
             yield return null;
         }
         
-        // ReSharper disable Unity.PerformanceAnalysis
         protected virtual IEnumerator Attack()
         {
             StartCoroutine(CheckDistance());
             
             while (CurrentTarget is not null && CurrentState == AIState.Attack)
             {
-                if (_targetDamageables is null || !_targetDamageables.Any())
-                    _targetDamageables = new List<IDamageable>(CurrentTarget.GetComponents<IDamageable>());
-
-                foreach (var damageable in _targetDamageables)
-                {
-                    damageable.GetDamage(damage);
-                }
+                Debug.Log("Attack: " + CurrentTarget.name + "| HP: " + Targets[CurrentTarget].Health);
+                Targets[CurrentTarget].GetDamage(damage);
 
                 yield return new WaitForSeconds(1 / attackSpeed);
             }
 
-            if (CurrentTarget == null)
+            if (CurrentTarget is null)
             {
                 ChangeState(AIState.Idle);
             }
@@ -153,26 +145,22 @@ namespace Models.AI
 
         protected virtual void ChangeState(AIState state)
         {
-            _targetDamageables = new List<IDamageable>();
             currentState = state;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var enemy = team switch
-            {
-                TeamType.Ally => "Enemy",
-                TeamType.Enemy => "Ally",
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            if (!other.CompareTag(enemy)) return;
             
-            Targets.Add(other.transform);
+            if (other.isTrigger) return;
+            if (!other.CompareTag(attackTeam.ToString())) return;
+            
+            Targets.Add(other.transform, other.transform.GetComponent<IDamageable>());
             UpdateTarget();
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
+            if(other.isTrigger) return;
             Targets.Remove(other.transform);
             UpdateTarget();
         }
@@ -183,7 +171,7 @@ namespace Models.AI
             {
                 Transform nearest = null;
                 var minDistance = float.MaxValue;
-                foreach (var target in Targets)
+                foreach (var target in Targets.Keys)
                 {
                     var distance = Distance(transform.position, target.position);
                     if (!(distance < minDistance)) continue;
@@ -194,6 +182,7 @@ namespace Models.AI
             }
             else
             {
+                _navMeshAgent.isStopped = true;
                 CurrentTarget = null;
             }
         }
