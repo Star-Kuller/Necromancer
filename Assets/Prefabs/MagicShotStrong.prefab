@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7920125270537681387}
   - component: {fileID: 7597908379471628305}
   - component: {fileID: 5218120066366977290}
-  - component: {fileID: 6322694221824064579}
+  - component: {fileID: 3096036081082761458}
   m_Layer: 5
-  m_Name: MagicShot
+  m_Name: MagicShotStrong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8619422913910700205, guid: 22eb866ef93782144a67734736cea7af, type: 3}
+  m_Sprite: {fileID: -5985923912005150996, guid: f2bf9e1b6c181914885ed05d2d58fad1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4e06f37e5546d98483db0fa0794759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6322694221824064579
+--- !u!114 &3096036081082761458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,13 +101,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3523914069621618449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a59b84f1953245e2995bb05beb06b25f, type: 3}
+  m_Script: {fileID: 11500000, guid: 453f44a0ab8d4592891d61db8610a2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 15
-  bullet: {fileID: 1023495613930312744, guid: 98d13044e64328941a39f130d41c19ef, type: 3}
-  damage: 10
-  bulletSpeed: 20
+  cost: 25
+  bullet: {fileID: 1023495613930312744, guid: 8b506371c3db0054e9ccaeb59b89057c, type: 3}
+  damage: 30
+  bulletSpeed: 5
 --- !u!1 &5405773708802565272
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,8 +173,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B \u043C\u0430\u0433\u0438\u0435\u0439
-    \u043D\u0430\u043D\u043E\u0441\u044F\u0449\u0438\u0439 10 \u0443\u0440\u043E\u043D\u0430"
+  m_text: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u043E\u0439
+    \u0448\u0430\u0440\u0430\u0432\u043E\u0439 \u043C\u043E\u043B\u043D\u0438\u0435\u0439
+    \u043D\u0430\u043D\u043E\u0441\u044F\u0449\u0435\u0439 30 \u0443\u0440\u043E\u043D\u0430."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -310,7 +311,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15
+  m_text: '0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -446,7 +449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0432\u044B\u0441\u0442\u0440\u0435\u043B"
+  m_text: "\u0428\u0430\u0440\u043E\u0432\u0430\u044F \n\u043C\u043E\u043B\u043D\u0438\u044F\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

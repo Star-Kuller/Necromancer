@@ -23,6 +23,7 @@ namespace Services.Cards
 
         private IPlayerService _player;
         private Dictionary<CardType, GameObject> _cards;
+        private IObjectPool _objectPool;
 
         private void Awake()
         {
@@ -39,11 +40,14 @@ namespace Services.Cards
                         => new KeyValuePair<CardType, GameObject>(key, cardValue[i])
                     )
                 );
-            DrawInitialHand();
-            StartCoroutine(DrawCardsWithDelay());
             
             var services = ServiceLocator.ServiceLocator.Current;
             _player = services.Get<IPlayerService>();
+            _objectPool = services.Get<IObjectPool>();
+
+            ShuffleDeck();
+            DrawInitialHand();
+            StartCoroutine(DrawCardsWithDelay());
         }
         
         
@@ -72,7 +76,7 @@ namespace Services.Cards
             {
                 var cardType = Deck[0];
                 Deck.RemoveAt(0);
-                Instantiate(_cards[cardType], hand);
+                _objectPool.Create(cardType.ToString(), _cards[cardType], hand);
             }
         }
 
@@ -94,7 +98,7 @@ namespace Services.Cards
             
             card.ApplyEffect();
             Discard.Add(card.Type);
-            Destroy(cardTransform.gameObject);
+            _objectPool.Destroy(card.Type.ToString(), cardTransform.gameObject);
         }
         
         private IEnumerator DrawCardsWithDelay()
@@ -104,13 +108,11 @@ namespace Services.Cards
                 yield return new WaitUntil(() => hand.childCount < maxHandSize);
                 yield return new WaitForSeconds(drawDelay);
                 DrawCard();
-                
             }
         }
 
         private void Update()
         {
-            // Обработка ввода для игры карт
             if (Input.GetKeyDown(KeyCode.Alpha1)) PlayCard(0);
             if (Input.GetKeyDown(KeyCode.Alpha2)) PlayCard(1);
             if (Input.GetKeyDown(KeyCode.Alpha3)) PlayCard(2);

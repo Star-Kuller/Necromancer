@@ -17,11 +17,7 @@ namespace Models.AI
             Attack
         }
         
-        public enum TeamType
-        {
-            Ally,
-            Enemy
-        }
+        
 
         public AIState CurrentState
         {
@@ -182,7 +178,7 @@ namespace Models.AI
             }
             else
             {
-                _navMeshAgent.isStopped = true;
+                ChangeState(AIState.Idle);
                 CurrentTarget = null;
             }
         }

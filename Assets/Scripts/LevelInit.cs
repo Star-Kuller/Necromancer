@@ -10,11 +10,14 @@ public class LevelInit : MonoBehaviour
 {
     private void Awake()
     {
-        ServiceLocator.Reset();
         var services = ServiceLocator.Current;
 
         var eventBus = new EventBus();
-        eventBus.Subscribe(EventList.PlayerDead, () => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+        eventBus.Subscribe(EventList.PlayerDead, () =>
+        {
+            ServiceLocator.Reset();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        });
         services.Register<IEventBus>(eventBus);
     }
 }

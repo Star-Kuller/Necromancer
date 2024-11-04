@@ -201,16 +201,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTeam: 0
   currentState: 0
-  patrolSpeed: 2
+  patrolSpeed: 1.5
   chaseSpeed: 3
   minAttackRange: 1
   maxAttackRange: 2
   damage: 15
   attackSpeed: 1
-  patrolWay:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolWay: []
 --- !u!114 &2879726495184927382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce017796d3b400cbe1702b2bca49f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Hillbilly
   health: 20
 --- !u!50 &9074269831224449128
 Rigidbody2D:

@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace Models.Cards
 {
-    public class MagicShot : Card
+    public class MagicShotStrong : Card
     {
         public override CardType Type => CardType.MagicShot;
         [SerializeField] private GameObject bullet;
-        [SerializeField] private float damage = 10;
-        [SerializeField] private float bulletSpeed = 20;
+        [SerializeField] private float damage = 30;
+        [SerializeField] private float bulletSpeed = 5;
 
         private IObjectPool _objectPool;
         private Transform _player;

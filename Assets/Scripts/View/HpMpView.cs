@@ -19,7 +19,7 @@ namespace View
 
         private void Update()
         {
-            _text.text = $"Здоровье: {_player.Health} Мана: {_player.Mana}";
+            _text.text = $"Здоровье: {Mathf.Round(_player.Health)} Мана: {Mathf.Ceil(_player.Mana)}";
         }
     }
 }

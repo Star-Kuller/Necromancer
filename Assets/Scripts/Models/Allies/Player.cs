@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Models.AI;
 using Services.EventBus;
 using Services.Interfaces;
@@ -32,7 +33,7 @@ namespace Models.Allies
             get => mana;
             set
             {
-                if (mana >= 0)
+                if (value > 0)
                     mana = value;
                 else
                     throw new ArgumentException("Мана не может быть меньше 0.");
@@ -41,20 +42,25 @@ namespace Models.Allies
 
         public Transform PlayerTransform => transform;
         
-        [SerializeField] private float mana = 20;
+        [SerializeField] private float mana = 30;
+        [SerializeField] private float manaPerSecond = 0.5f;
 
         private IEventBus _eventBus;
+        private float _maxMana;
 
         private void Awake()
         {
             var services = ServiceLocator.Current;
             services.TryRegister<IPlayerService>(this);
+            _maxMana = mana;
         }
 
         private void Start()
         {
             var services = ServiceLocator.Current;
             _eventBus = services.Get<IEventBus>();
+
+            StartCoroutine(ManaRestore());
         }
 
         public bool SpentMana(float value)
@@ -67,6 +73,18 @@ namespace Models.Allies
             catch (ArgumentException e)
             {
                 return false;
+            }
+        }
+
+        private IEnumerator ManaRestore()
+        {
+            while (true)
+            {
+                yield return new WaitUntil(() => mana < _maxMana);
+                yield return new WaitForSeconds(1);
+                mana += manaPerSecond < _maxMana - mana 
+                    ? manaPerSecond 
+                    : _maxMana - mana;
             }
         }
     }

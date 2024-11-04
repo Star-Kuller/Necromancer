@@ -1,6 +1,6 @@
 namespace Models.Enemies
 {
-    public class Hillbilly : AI.AI
+    public class Knight : AI.AI
     {
         
     }
