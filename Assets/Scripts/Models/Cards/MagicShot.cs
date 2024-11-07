@@ -9,9 +9,9 @@ namespace Models.Cards
     public class MagicShot : Card
     {
         public override CardType Type => CardType.MagicShot;
-        [SerializeField] private GameObject bullet;
+        [SerializeField] private GameObject projectile;
         [SerializeField] private float damage = 10;
-        [SerializeField] private float bulletSpeed = 20;
+        [SerializeField] private float projectileSpeed = 20;
 
         private IObjectPool _objectPool;
         private Transform _player;
@@ -32,17 +32,17 @@ namespace Models.Cards
             mousePosition.z = 0; 
             var direction = (mousePosition - _player.position).normalized;
             
-            var newBullet = _objectPool.Create($"{Type}_bullet", bullet);
-            newBullet.transform.position = _player.position;
+            var newProjectile  = _objectPool.Create($"{Type}_Projectile", projectile);
+            newProjectile.transform.position = _player.position;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            newBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            newProjectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             
-            var rb = newBullet.GetComponent<Rigidbody2D>();
-            var bulletModel = newBullet.GetComponent<Bullet>();
-            bulletModel.BulletKey = $"{Type}_bullet";
-            bulletModel.Damage = damage;
-            bulletModel.AttackTeam = TeamType.Enemy;
-            rb.velocity = direction * bulletSpeed;
+            var rb = newProjectile.GetComponent<Rigidbody2D>();
+            var projectileModel = newProjectile.GetComponent<Projectile>();
+            projectileModel.ProjectileKey = $"{Type}_Projectile";
+            projectileModel.Damage = damage;
+            projectileModel.AttackTeam = TeamType.Enemy;
+            rb.velocity = direction * projectileSpeed;
         }
     }
 }

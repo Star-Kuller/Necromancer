@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Models
 {
-    public class Bullet : MonoBehaviour, IResetable
+    public class Projectile : MonoBehaviour, IResetable
     {
-        public string BulletKey { get; set; }
+        public string ProjectileKey { get; set; }
         public float Damage { get; set; }
         public TeamType AttackTeam { get; set; } = TeamType.Enemy;
         [SerializeField] private float ttl; 
@@ -33,12 +33,11 @@ namespace Models
                 var damageable = other.transform.GetComponent<IDamageable>();
                 damageable.GetDamage(Damage);
             }
-            _objectPool.Destroy(BulletKey, gameObject);
+            _objectPool.Destroy(ProjectileKey, gameObject);
         }
 
         public void Reset()
         {
-            BulletKey = "";
             Damage = 0;
             AttackTeam = TeamType.Enemy;
         }
