@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Models.Cards
 {
-    public class MagicShotStrong : Card
+    public class BallLightning : Card
     {
-        public override CardType Type => CardType.MagicShotStrong;
+        public override CardType Type => CardType.BallLightning;
         [SerializeField] private GameObject bullet;
         [SerializeField] private float damage = 30;
         [SerializeField] private float bulletSpeed = 5;

@@ -34,6 +34,8 @@ namespace Models.Cards
             
             var newBullet = _objectPool.Create($"{Type}_bullet", bullet);
             newBullet.transform.position = _player.position;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            newBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             
             var rb = newBullet.GetComponent<Rigidbody2D>();
             var bulletModel = newBullet.GetComponent<Bullet>();
