@@ -8,7 +8,7 @@ namespace Models.Cards
 {
     public class MagicShotStrong : Card
     {
-        public override CardType Type => CardType.MagicShot;
+        public override CardType Type => CardType.MagicShotStrong;
         [SerializeField] private GameObject bullet;
         [SerializeField] private float damage = 30;
         [SerializeField] private float bulletSpeed = 5;
