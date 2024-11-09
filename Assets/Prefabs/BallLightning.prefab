@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453f44a0ab8d4592891d61db8610a2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 25
+  cost: 20
   projectile: {fileID: 1023495613930312744, guid: 8b506371c3db0054e9ccaeb59b89057c, type: 3}
   damage: 30
   projectileSpeed: 5

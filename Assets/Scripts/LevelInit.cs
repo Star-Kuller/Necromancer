@@ -15,7 +15,7 @@ public class LevelInit : MonoBehaviour, IAutoRegistration
     [Inject]
     private void Initialization(IEventBus eventBus)
     {
-        eventBus.Subscribe(EventList.PlayerDead, _ =>
+        eventBus.Subscribe(GameEventList.PlayerDead, _ =>
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });

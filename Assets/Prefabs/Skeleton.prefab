@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7557353436943249822}
   - component: {fileID: 2690182892223492438}
   - component: {fileID: 3978412474340091624}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6953371373981466537}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.2
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -206,9 +206,15 @@ MonoBehaviour:
   chaseSpeed: 3
   minAttackRange: 1
   maxAttackRange: 1.7
-  damage: 5
+  damage: 10
   attackSpeed: 1
   patrolWay: []
+  defencePoint: {fileID: 0}
+  rayCastObstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  defenceMaxDistance: 5
+  defenceMaxAttempts: 50
 --- !u!114 &7557353436943249822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce017796d3b400cbe1702b2bca49f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 
+  poolKey: Skeleton
   health: 25
 --- !u!50 &2690182892223492438
 Rigidbody2D:
@@ -236,7 +242,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 20
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -266,7 +272,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 439
+    m_Bits: 384
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

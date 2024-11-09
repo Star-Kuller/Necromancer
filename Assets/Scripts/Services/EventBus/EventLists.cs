@@ -1,9 +1,14 @@
 namespace Services.EventBus
 {
-    public enum EventList
+    public enum GameEventList
     {
         PlayerDead,
         PlayerReceivedDamage,
-        PlayerManaIsOut
+        NotEnoughMana
+    }
+    
+    public enum ViewEventList
+    {
+        
     }
 }

@@ -16,8 +16,6 @@ namespace Models.AI
             Chase,
             Attack
         }
-        
-        
 
         public AIState CurrentState
         {
@@ -37,6 +35,7 @@ namespace Models.AI
         
         protected int PatrolIndex = 0;
         protected Transform CurrentTarget;
+        protected Vector3 LastPositionOfTarget;
         protected readonly Dictionary<Transform, IDamageable> Targets = new();
 
         private NavMeshAgent _navMeshAgent;
@@ -52,9 +51,36 @@ namespace Models.AI
         {
             currentState = AIState.Chase;
             StartCoroutine(AIStateMachine());
+            CheckExistingColliders();
+        }
+        
+        private void CheckExistingColliders()
+        {
+            var triggerColliders = GetComponents<Collider2D>();
+            foreach (var triggerCollider in triggerColliders.Where(x => x.isTrigger))
+            {
+                var colliders = new Collider2D[15];
+                var filter = new ContactFilter2D().NoFilter();
+                var count = triggerCollider.Overlap(filter, colliders);
+                for (var i = 0; i < count; i++)
+                {
+                    if (!colliders.Contains(colliders[i]))
+                    {
+                        OnTriggerEnter2D(colliders[i]);
+                    }
+                }
+            }
         }
 
-        protected virtual IEnumerator AIStateMachine()
+        protected void SetDestination(Vector3 position)
+        {
+            if (!(Distance(position, LastPositionOfTarget) > 1)) return;
+            
+            LastPositionOfTarget = position;
+            _navMeshAgent.SetDestination(LastPositionOfTarget);
+        }
+
+        private IEnumerator AIStateMachine()
         {
             while (true)
             {
@@ -71,10 +97,9 @@ namespace Models.AI
 
         protected virtual IEnumerator Idle()
         {
-            _navMeshAgent.speed = patrolSpeed;
             if (patrolWay.Any())
             {
-                _navMeshAgent.SetDestination(patrolWay[PatrolIndex].position);
+                SetDestination(patrolWay[PatrolIndex].position);
                 if (Distance(transform.position, patrolWay[PatrolIndex].position) < 0.2)
                 {
                     PatrolIndex++;
@@ -83,11 +108,12 @@ namespace Models.AI
                         patrolWay = patrolWay.Reverse().ToArray();
                         PatrolIndex = 0;
                     }
+
+                        
                 }
             }
             if (CurrentTarget is not null)
                 ChangeState(AIState.Chase);
-            
             yield return null;
         }
         
@@ -95,8 +121,7 @@ namespace Models.AI
         {
             if (CurrentTarget is not null)
             {
-                _navMeshAgent.speed = chaseSpeed;
-                _navMeshAgent.SetDestination(CurrentTarget.position);
+                SetDestination(CurrentTarget.position);
                 if (Distance(transform.position, CurrentTarget.position) <= minAttackRange)
                     ChangeState(AIState.Attack);
                 UpdateTarget();
@@ -108,14 +133,15 @@ namespace Models.AI
             yield return null;
         }
         
+        // ReSharper disable Unity.PerformanceAnalysis
         protected virtual IEnumerator Attack()
         {
             StartCoroutine(CheckDistance());
             
             while (CurrentTarget is not null && CurrentState == AIState.Attack)
             {
-                Debug.Log("Attack: " + CurrentTarget.name + "| HP: " + Targets[CurrentTarget].Health);
-                Targets[CurrentTarget].GetDamage(damage);
+                Debug.Log($"{name} attack {CurrentTarget.name} | HP: {Targets[CurrentTarget].Health} Damage: -{damage}");
+                Targets[CurrentTarget].DealDamage(damage);
 
                 yield return new WaitForSeconds(1 / attackSpeed);
             }
@@ -126,7 +152,7 @@ namespace Models.AI
             }
         }
         
-        private IEnumerator CheckDistance()
+        protected virtual IEnumerator CheckDistance()
         {
             while (CurrentTarget is not null && CurrentState == AIState.Attack)
             {
@@ -142,26 +168,39 @@ namespace Models.AI
         protected virtual void ChangeState(AIState state)
         {
             currentState = state;
+            switch (state)
+            {
+                case AIState.Idle:
+                    _navMeshAgent.speed = patrolSpeed;
+                    break;
+                case AIState.Chase:
+                    _navMeshAgent.speed = chaseSpeed;
+                    break;
+                case AIState.Attack:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             
             if (other.isTrigger) return;
             if (!other.CompareTag(attackTeam.ToString())) return;
             
-            Targets.Add(other.transform, other.transform.GetComponent<IDamageable>());
+            Targets.TryAdd(other.transform, other.transform.GetComponent<IDamageable>());
             UpdateTarget();
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        protected virtual void OnTriggerExit2D(Collider2D other)
         {
             if(other.isTrigger) return;
             Targets.Remove(other.transform);
             UpdateTarget();
         }
         
-        protected void UpdateTarget()
+        protected virtual void UpdateTarget()
         {
             if (Targets.Any())
             {

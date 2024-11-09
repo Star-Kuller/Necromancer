@@ -28,7 +28,7 @@ namespace Models.AI
             health = 100;
         }
 
-        public virtual void GetDamage(float damage)
+        public virtual void DealDamage(float damage)
         {
             Health -= damage;
         }

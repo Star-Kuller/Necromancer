@@ -4,6 +4,6 @@ namespace Models.AI
     {
         public float Health { get; set; }
 
-        public void GetDamage(float damage);
+        public void DealDamage(float damage);
     }
 }

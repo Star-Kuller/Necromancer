@@ -174,7 +174,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4407733809707112446}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.2
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce017796d3b400cbe1702b2bca49f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 
+  poolKey: Hillbilly
   health: 20
 --- !u!50 &9074269831224449128
 Rigidbody2D:
@@ -235,7 +235,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 20
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}

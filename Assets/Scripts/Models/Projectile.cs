@@ -24,7 +24,7 @@ namespace Models
             if (other.transform.CompareTag(AttackTeam.ToString()))
             {
                 var damageable = other.transform.GetComponent<IDamageable>();
-                damageable.GetDamage(Damage);
+                damageable.DealDamage(Damage);
             }
             _objectPool.Destroy(ProjectileKey, gameObject);
         }

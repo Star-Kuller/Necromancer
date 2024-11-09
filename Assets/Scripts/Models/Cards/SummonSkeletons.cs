@@ -1,3 +1,4 @@
+using Models.AI;
 using Services.Cards;
 using Services.DependencyInjection;
 using Services.Interfaces;
@@ -11,6 +12,7 @@ namespace Models.Cards
         [SerializeField] private GameObject skeleton;
         
         [Inject] private IObjectPool _objectPool;
+        [SerializeField] private string poolKey = "Skeleton";
         private Transform _player;
 
         [Inject]
@@ -21,14 +23,24 @@ namespace Models.Cards
         
         public override void ApplyEffect()
         {
-            var positionSkeletonOne = _player.position + Vector3.right * 2;
-            var positionSkeletonTwo = _player.position + Vector3.left  * 2;
+            SpawnSkeletons(Vector3.right, Vector3.left);
+        }
 
-            var skeletonOne = _objectPool.Create($"{Type.ToString()}_Skeletons", skeleton);
-            var skeletonTwo = _objectPool.Create($"{Type.ToString()}_Skeletons", skeleton);
+        private void SpawnSkeletons(params Vector3[] offsets)
+        {
+            foreach (var offset in offsets)
+            {
+                SpawnSkeleton(_player.position + offset);
+            }
+        }
 
-            skeletonOne.transform.position = positionSkeletonOne;
-            skeletonTwo.transform.position = positionSkeletonTwo;
+        private void SpawnSkeleton(Vector3 position)
+        {
+            var skeletonObject = _objectPool.Create(poolKey, skeleton);
+            var skeletonAI = skeletonObject.GetComponent<DefencePointAI>();
+            skeletonAI.DefencePoint = _player;
+
+            skeletonObject.transform.position = position;
         }
     }
 }

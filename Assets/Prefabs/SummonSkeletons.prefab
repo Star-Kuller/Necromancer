@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 25
   skeleton: {fileID: 6953371373981466537, guid: d8589ebd18084dc47be36bb61d7234dd, type: 3}
+  poolKey: Skeleton
 --- !u!1 &5405773708802565272
 GameObject:
   m_ObjectHideFlags: 0

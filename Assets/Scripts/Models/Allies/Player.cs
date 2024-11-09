@@ -16,14 +16,14 @@ namespace Models.Allies
             set
             {
                 if(value < health)
-                    _eventBus.CallEvent(EventList.PlayerReceivedDamage);
+                    _eventBus.CallEvent(GameEventList.PlayerReceivedDamage);
                 
                 if (value > 0)
                     health = value;
                 else
                 {
                     health = 0;
-                    _eventBus.CallEvent(EventList.PlayerDead);
+                    _eventBus.CallEvent(GameEventList.PlayerDead);
                 }
             }
         }
@@ -72,6 +72,7 @@ namespace Models.Allies
             }
             catch (ArgumentException e)
             {
+                _eventBus.CallEvent(GameEventList.NotEnoughMana);
                 return false;
             }
         }
