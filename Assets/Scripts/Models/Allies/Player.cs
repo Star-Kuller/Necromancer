@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using Models.AI;
+using Services.DependencyInjection;
 using Services.EventBus;
 using Services.Interfaces;
-using Services.ServiceLocator;
 using UnityEngine;
 
 namespace Models.Allies
 {
-    public class Player : Alive, IPlayerService
+    public class Player : Alive, IPlayerService, IAutoRegistration
     {
         public override float Health
         {
@@ -18,13 +18,13 @@ namespace Models.Allies
                 if(value < health)
                     _eventBus.CallEvent(EventList.PlayerReceivedDamage);
                 
-                if (health > 0)
+                if (value > 0)
                     health = value;
                 else
-                    _eventBus.CallEvent(EventList.PlayerDead);
-
-                if (health < 0)
+                {
                     health = 0;
+                    _eventBus.CallEvent(EventList.PlayerDead);
+                }
             }
         }
         
@@ -45,21 +45,21 @@ namespace Models.Allies
         [SerializeField] private float mana = 30;
         [SerializeField] private float manaPerSecond = 0.5f;
 
-        private IEventBus _eventBus;
+        [Inject] private IEventBus _eventBus;
         private float _maxMana;
+        
+        public void Register()
+        {
+            this.Register<IPlayerService>();
+        }
 
         private void Awake()
         {
-            var services = ServiceLocator.Current;
-            services.TryRegister<IPlayerService>(this);
             _maxMana = mana;
         }
 
         private void Start()
         {
-            var services = ServiceLocator.Current;
-            _eventBus = services.Get<IEventBus>();
-
             StartCoroutine(ManaRestore());
         }
 
@@ -87,5 +87,6 @@ namespace Models.Allies
                     : _maxMana - mana;
             }
         }
+        
     }
 }

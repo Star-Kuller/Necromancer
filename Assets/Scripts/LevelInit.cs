@@ -1,23 +1,23 @@
-
-
+using Services.DependencyInjection;
 using Services.EventBus;
 using Services.Interfaces;
-using Services.ServiceLocator;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelInit : MonoBehaviour
+public class LevelInit : MonoBehaviour, IAutoRegistration
 {
-    private void Awake()
+    public void Register()
     {
-        var services = ServiceLocator.Current;
-
         var eventBus = new EventBus();
-        eventBus.Subscribe(EventList.PlayerDead, () =>
+        eventBus.Register<IEventBus>();
+    }
+    
+    [Inject]
+    private void Initialization(IEventBus eventBus)
+    {
+        eventBus.Subscribe(EventList.PlayerDead, _ =>
         {
-            ServiceLocator.Reset();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });
-        services.Register<IEventBus>(eventBus);
     }
 }

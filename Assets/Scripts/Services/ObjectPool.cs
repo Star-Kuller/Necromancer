@@ -1,23 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Models;
+using Services.DependencyInjection;
 using Services.Interfaces;
 using UnityEngine;
 
 namespace Services
 {
-    public class ObjectPool : MonoBehaviour, IObjectPool
+    public class ObjectPool : MonoBehaviour, IObjectPool, IAutoRegistration
     {
-
         private Dictionary<string, List<GameObject>> _pool = new();
-
-        private void Awake()
+        
+        public void Register()
         {
-            var services = ServiceLocator.ServiceLocator.Current;
-            services.TryRegister<IObjectPool>(this);
+            this.Register<IObjectPool>();
         }
-
+        
         // ReSharper disable Unity.PerformanceAnalysis
         public void Destroy(string key, GameObject target)
         {
@@ -38,33 +38,31 @@ namespace Services
                 _pool.Add(key, new List<GameObject>() { target });
             }
         }
-
-        public GameObject Create(string key, GameObject target)
-        {
-            if (!_pool.TryGetValue(key, out var list)) return Instantiate(target);
-            
-            var obj = list.FirstOrDefault();
-            if (obj is null) return Instantiate(target);
-                
-            list.Remove(obj);
-            obj.transform.SetParent(null);
-            obj.SetActive(true);
-            return obj;
-
-        }
         
-        public GameObject Create(string key, GameObject target, Transform parent)
+        // ReSharper disable Unity.PerformanceAnalysis
+        public GameObject Create(string key, GameObject prefab,Transform parent = default, bool isActive = true)
         {
-            if (!_pool.TryGetValue(key, out var list)) return Instantiate(target, parent);
+            if (!_pool.TryGetValue(key, out var list)) return Create(prefab, parent, isActive);
             
             var obj = list.FirstOrDefault();
-            if (obj is null) return Instantiate(target, parent);
-                
+            if (obj is null)
+                return Create(prefab, parent, isActive);
+            
             list.Remove(obj);
             obj.transform.SetParent(parent);
-            obj.SetActive(true);
+            obj.SetActive(isActive);
             return obj;
+        }
 
+        private static GameObject Create(GameObject prefab, [CanBeNull] Transform parent = default, bool isActive = true)
+        {
+            var prefabActive = prefab.activeSelf;
+            prefab.SetActive(false);
+            var obj = Instantiate(prefab, parent);
+            obj.Inject();
+            prefab.SetActive(prefabActive);
+            obj.SetActive(isActive);
+            return obj;
         }
     }
 }

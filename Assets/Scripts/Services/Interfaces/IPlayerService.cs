@@ -1,9 +1,9 @@
-using Services.ServiceLocator;
+using Services.DependencyInjection;
 using UnityEngine;
 
 namespace Services.Interfaces
 {
-    public interface IPlayerService : IService
+    public interface IPlayerService : IInjectable
     {
         public float Health { get; set; }
         public float Mana { get; set; }

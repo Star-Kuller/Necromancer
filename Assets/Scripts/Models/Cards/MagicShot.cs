@@ -1,7 +1,8 @@
+using System;
 using Models.AI;
 using Services.Cards;
+using Services.DependencyInjection;
 using Services.Interfaces;
-using Services.ServiceLocator;
 using UnityEngine;
 
 namespace Models.Cards
@@ -13,19 +14,17 @@ namespace Models.Cards
         [SerializeField] private float damage = 10;
         [SerializeField] private float projectileSpeed = 20;
 
-        private IObjectPool _objectPool;
+        [Inject] private IObjectPool _objectPool;
         private Transform _player;
         private Camera _mainCamera;
 
-        
-        private void Start()
+        [Inject]
+        private void Init(IPlayerService playerService)
         {
-            var services = ServiceLocator.Current;
-            _objectPool = services.Get<IObjectPool>();
-            _player = services.Get<IPlayerService>().PlayerTransform;
+            _player = playerService.PlayerTransform;
             _mainCamera = Camera.main; 
         }
-        
+
         public override void ApplyEffect()
         {
             var mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);

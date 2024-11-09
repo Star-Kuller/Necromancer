@@ -4,5 +4,6 @@ namespace Services.Cards
     {
         MagicShot,
         BallLightning,
+        SummonSkeletons,
     }
 }

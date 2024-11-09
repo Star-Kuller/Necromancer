@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using Models.AI;
+using Services.DependencyInjection;
 using Services.Interfaces;
-using Services.ServiceLocator;
 using UnityEngine;
 
 namespace Models
@@ -13,13 +12,7 @@ namespace Models
         public float Damage { get; set; }
         public TeamType AttackTeam { get; set; } = TeamType.Enemy;
         [SerializeField] private float ttl; 
-        private IObjectPool _objectPool;
-        
-        private void Start()
-        {
-            var services = ServiceLocator.Current;
-            _objectPool = services.Get<IObjectPool>();
-        }
+        [Inject] private IObjectPool _objectPool;
 
         private void OnEnable()
         {
@@ -45,7 +38,7 @@ namespace Models
         private IEnumerator LifeCycle()
         {
             yield return new WaitForSeconds(ttl);
-            _objectPool.Destroy(name, gameObject);
+            _objectPool.Destroy(ProjectileKey, gameObject);
         }
     }
 }

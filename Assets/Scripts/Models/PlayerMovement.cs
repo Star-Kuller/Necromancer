@@ -16,10 +16,11 @@ namespace Models
         {
             var moveHorizontal = Input.GetAxis("Horizontal");
             var moveVertical = Input.GetAxis("Vertical");
+
+            var vector = new Vector2(moveHorizontal, moveVertical);
+            var movement = vector.normalized;
         
-            var movement = new Vector2(moveHorizontal, moveVertical).normalized;
-        
-            _rb.velocity = movement * speed;
+            _rb.velocity = movement * (speed * Mathf.Clamp01(vector.magnitude));
         }
     }
 }
