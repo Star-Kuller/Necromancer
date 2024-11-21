@@ -47,7 +47,7 @@ namespace Models.AI
             _navMeshAgent.updateUpAxis = false;
         }
 
-        private void Start()
+        private void OnEnable()
         {
             currentState = AIState.Chase;
             StartCoroutine(AIStateMachine());

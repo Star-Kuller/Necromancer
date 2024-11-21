@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTeam: 1
   currentState: 0
-  patrolSpeed: 2
+  patrolSpeed: 2.5
   chaseSpeed: 3
   minAttackRange: 1
   maxAttackRange: 1.7
@@ -213,7 +213,7 @@ MonoBehaviour:
   rayCastObstacleLayer:
     serializedVersion: 2
     m_Bits: 0
-  defenceMaxDistance: 5
+  defenceMaxDistance: 4
   defenceMaxAttempts: 50
 --- !u!114 &7557353436943249822
 MonoBehaviour:

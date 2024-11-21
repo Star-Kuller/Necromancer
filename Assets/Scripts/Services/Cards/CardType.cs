@@ -5,5 +5,8 @@ namespace Services.Cards
         MagicShot,
         BallLightning,
         SummonSkeletons,
+        Heal,
+        Teleport,
+        Attack,
     }
 }

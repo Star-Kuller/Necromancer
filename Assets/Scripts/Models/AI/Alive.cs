@@ -22,8 +22,8 @@ namespace Models.AI
         [SerializeField] protected string poolKey;
         [SerializeField] protected float health = 100;
         [Inject] protected IObjectPool ObjectPool;
-        
-        public void Reset()
+
+        public virtual void Reset()
         {
             health = 100;
         }

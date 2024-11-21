@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7e408c2207b8e3347b2bf0d4ead20acd
+guid: dba7f038e6de25d4d9b974aae05d63b4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4535533745842563456
-    second: card_heal_0
+      213: -7173773485940793736
+    second: card_attack_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,7 +152,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card_heal_0
+      name: card_attack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 086d144a61c8e01c0800000000000000
-      internalID: -4535533745842563456
+      spriteID: 87e1267d503a17c90800000000000000
+      internalID: -7173773485940793736
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      card_heal_0: -4535533745842563456
+      card_attack_0: -7173773485940793736
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,25 +6,12 @@ using UnityEngine.SceneManagement;
 
 namespace Services.DependencyInjection
 {
-    public class DependencyInjector : IDisposable
+    public class DependencyInjector
     {
         #region Container life cicle
 
         private DependencyInjector()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        public void Dispose()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-        
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize()
-        {
-            _ = Current;
-        }
+        { }
         
         private static DependencyInjector _current = new();
 
@@ -44,7 +31,7 @@ namespace Services.DependencyInjection
 
         #region AutoInit
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        public void AutoRegisterAndInject(Scene scene)
         {
             var allObjects = scene.GetRootGameObjects();
             foreach (var rootObject in allObjects)
@@ -57,7 +44,7 @@ namespace Services.DependencyInjection
             }
         }
         
-        private static void RegisterProcessGameObjectHierarchy(GameObject obj)
+        private void RegisterProcessGameObjectHierarchy(GameObject obj)
         {
             Register(obj);
             
@@ -111,7 +98,7 @@ namespace Services.DependencyInjection
             var components = obj.GetComponents<IAutoRegistration>();
             foreach (var component in components)
             {
-                component?.Register();
+                component.Register();
             }
         }
 

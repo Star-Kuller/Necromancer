@@ -16,14 +16,18 @@ namespace Models.Allies
             set
             {
                 if(value < health)
-                    _eventBus.CallEvent(GameEventList.PlayerReceivedDamage);
-                
+                    _eventBus.CallEvent(GameEvent.PlayerReceivedDamage);
+                if(value > health)
+                    _eventBus.CallEvent(GameEvent.PlayerHealed);
+
                 if (value > 0)
-                    health = value;
+                {
+                    health = value > _maxHealth ? _maxHealth : value;
+                }
                 else
                 {
                     health = 0;
-                    _eventBus.CallEvent(GameEventList.PlayerDead);
+                    _eventBus.CallEvent(GameEvent.PlayerDead);
                 }
             }
         }
@@ -46,6 +50,7 @@ namespace Models.Allies
         [SerializeField] private float manaPerSecond = 0.5f;
 
         [Inject] private IEventBus _eventBus;
+        private float _maxHealth;
         private float _maxMana;
         
         public void Register()
@@ -55,6 +60,7 @@ namespace Models.Allies
 
         private void Awake()
         {
+            _maxHealth = health;
             _maxMana = mana;
         }
 
@@ -72,7 +78,7 @@ namespace Models.Allies
             }
             catch (ArgumentException e)
             {
-                _eventBus.CallEvent(GameEventList.NotEnoughMana);
+                _eventBus.CallEvent(GameEvent.NotEnoughMana);
                 return false;
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using Services.DependencyInjection;
 using Services.EventBus;
 using Services.Interfaces;
@@ -6,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelInit : MonoBehaviour, IAutoRegistration
 {
+    public void Awake()
+    {
+        DependencyInjector.Current.AutoRegisterAndInject(SceneManager.GetActiveScene());
+    }
+
     public void Register()
     {
         var eventBus = new EventBus();
@@ -15,7 +21,7 @@ public class LevelInit : MonoBehaviour, IAutoRegistration
     [Inject]
     private void Initialization(IEventBus eventBus)
     {
-        eventBus.Subscribe(GameEventList.PlayerDead, _ =>
+        eventBus.Subscribe(GameEvent.PlayerDead, _ =>
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });
