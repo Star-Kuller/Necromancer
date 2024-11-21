@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 444ab843280072b48b0a320bea059a00
+guid: 7e408c2207b8e3347b2bf0d4ead20acd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8312582693884609800
-    second: BallLightning_0
+      213: -4535533745842563456
+    second: card_heal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BallLightning_0
+      name: card_heal_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 15
-        height: 16
+        width: 64
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8fab2f4f416c3ac80800000000000000
-      internalID: -8312582693884609800
+      spriteID: 086d144a61c8e01c0800000000000000
+      internalID: -4535533745842563456
       vertices: []
       indices: 
       edges: []
@@ -186,8 +186,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      BallLightning_0: -8312582693884609800
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
