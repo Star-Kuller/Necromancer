@@ -5,7 +5,8 @@ namespace Services.EventBus
         PlayerDead,
         PlayerReceivedDamage,
         NotEnoughMana,
-        PlayerHealed
+        PlayerHealed,
+        BossDead
     }
     
     public enum ViewEvent

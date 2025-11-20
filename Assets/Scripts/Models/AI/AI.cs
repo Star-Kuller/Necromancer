@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.Vector3;
@@ -34,17 +35,29 @@ namespace Models.AI
         [SerializeField] protected Transform[] patrolWay;
         
         protected int PatrolIndex = 0;
-        protected Transform CurrentTarget;
+        [CanBeNull] protected Transform CurrentTarget;
         protected Vector3 LastPositionOfTarget;
         protected readonly Dictionary<Transform, IDamageable> Targets = new();
 
-        private NavMeshAgent _navMeshAgent;
+        protected NavMeshAgent NavMeshAgent;
+        private SpriteRenderer _render;
 
-        private void Awake()
+        public virtual void Awake()
         {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-            _navMeshAgent.updateRotation = false;
-            _navMeshAgent.updateUpAxis = false;
+            NavMeshAgent = GetComponent<NavMeshAgent>();
+            _render = GetComponent<SpriteRenderer>();
+            NavMeshAgent.updateRotation = false;
+            NavMeshAgent.updateUpAxis = false;
+        }
+
+        public virtual void Update()
+        {
+            _render.flipX = NavMeshAgent.velocity.x switch
+            {
+                > 0 => false,
+                < 0 => true,
+                _ => _render.flipX
+            };
         }
 
         private void OnEnable()
@@ -77,7 +90,7 @@ namespace Models.AI
             if (!(Distance(position, LastPositionOfTarget) > 1)) return;
             
             LastPositionOfTarget = position;
-            _navMeshAgent.SetDestination(LastPositionOfTarget);
+            NavMeshAgent.SetDestination(LastPositionOfTarget);
         }
 
         private IEnumerator AIStateMachine()
@@ -140,9 +153,7 @@ namespace Models.AI
             
             while (CurrentTarget is not null && CurrentState == AIState.Attack)
             {
-                Debug.Log($"{name} attack {CurrentTarget.name} | HP: {Targets[CurrentTarget].Health} Damage: -{damage}");
-                Targets[CurrentTarget].DealDamage(damage);
-
+                StartCoroutine(DealDamage());
                 yield return new WaitForSeconds(1 / attackSpeed);
             }
 
@@ -150,6 +161,13 @@ namespace Models.AI
             {
                 ChangeState(AIState.Idle);
             }
+        }
+
+        protected virtual IEnumerator DealDamage()
+        {
+            if(CurrentTarget is not null) 
+                Targets[CurrentTarget].DealDamage(damage);
+            yield break;
         }
         
         protected virtual IEnumerator CheckDistance()
@@ -171,10 +189,10 @@ namespace Models.AI
             switch (state)
             {
                 case AIState.Idle:
-                    _navMeshAgent.speed = patrolSpeed;
+                    NavMeshAgent.speed = patrolSpeed;
                     break;
                 case AIState.Chase:
-                    _navMeshAgent.speed = chaseSpeed;
+                    NavMeshAgent.speed = chaseSpeed;
                     break;
                 case AIState.Attack:
                     break;
@@ -187,7 +205,8 @@ namespace Models.AI
         {
             
             if (other.isTrigger) return;
-            if (!other.CompareTag(attackTeam.ToString())) return;
+            if (!(other.CompareTag(attackTeam.ToString()) 
+                || (other.CompareTag("Player") && attackTeam == TeamType.Ally))) return;
             
             Targets.TryAdd(other.transform, other.transform.GetComponent<IDamageable>());
             UpdateTarget();

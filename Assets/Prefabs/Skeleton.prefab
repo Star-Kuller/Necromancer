@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 7557353436943249822}
   - component: {fileID: 2690182892223492438}
   - component: {fileID: 3978412474340091624}
+  - component: {fileID: 2922259666091749667}
+  - component: {fileID: 2166671174513551951}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Ally
@@ -59,6 +61,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,10 +84,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 4354231566380549168, guid: 831fbec91203d084ca0c57c3aff3bcfb, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -7219542275010057529, guid: 9f7e48d59d4bfe04796e97737dee2d14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,7 +133,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.15}
+  m_Offset: {x: -0.02, y: -0.22}
   m_Radius: 0.1
 --- !u!58 &7438973265534406716
 CircleCollider2D:
@@ -164,7 +169,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.02, y: 0}
   m_Radius: 2
 --- !u!195 &7301700232178699789
 NavMeshAgent:
@@ -175,7 +180,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6953371373981466537}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.1
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -227,11 +232,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce017796d3b400cbe1702b2bca49f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   poolKey: Skeleton
   health: 25
 --- !u!50 &2690182892223492438
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -242,8 +248,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 20
-  m_AngularDrag: 0.05
+  m_LinearDamping: 20
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -290,6 +296,40 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.02, y: -0.07}
   m_Size: {x: 0.21, y: 0.52}
   m_Direction: 0
+--- !u!95 &2922259666091749667
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953371373981466537}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0487bbbe43cfb0c4e8b5fd3b548bf5a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2166671174513551951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953371373981466537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5890f615e64361ace8cab6eee626e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSortOrder

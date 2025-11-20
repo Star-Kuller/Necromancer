@@ -59,6 +59,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,6 +82,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -129,7 +132,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.09, y: -0.12}
-  m_Radius: 0.15
+  m_Radius: 0.1
 --- !u!58 &5500136357679963024
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -175,7 +178,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2490583653175523310}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.12
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -204,7 +207,7 @@ MonoBehaviour:
   health: 40
 --- !u!50 &1840848576075724952
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -215,8 +218,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 20
-  m_AngularDrag: 0.05
+  m_LinearDamping: 20
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -263,8 +266,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.06, y: -0}
-  m_Size: {x: 0.46, y: 0.54}
+  m_Offset: {x: -0.08, y: -0}
+  m_Size: {x: 0.28, y: 0.42}
   m_Direction: 0
 --- !u!114 &5141621572497905631
 MonoBehaviour:
@@ -282,8 +285,8 @@ MonoBehaviour:
   currentState: 0
   patrolSpeed: 2
   chaseSpeed: 5
-  minAttackRange: 2
-  maxAttackRange: 3
+  minAttackRange: 1
+  maxAttackRange: 2
   damage: 30
   attackSpeed: 2
   patrolWay: []

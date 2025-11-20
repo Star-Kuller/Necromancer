@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 2879726495184927382}
   - component: {fileID: 9074269831224449128}
   - component: {fileID: 3955690247003810503}
+  - component: {fileID: 8129986127271057501}
+  - component: {fileID: 6300363448966357883}
   m_Layer: 8
   m_Name: Hillbilly
   m_TagString: Enemy
@@ -34,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.49, y: -3.1, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,6 +61,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,10 +84,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: -2883621231451578760, guid: 54a9b6cef711e244bb9459759d4f29ab, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 8839622324151487411, guid: 6b1e743bfb0fff747a3d780e3af0a2b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,8 +133,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.05, y: -0.15}
-  m_Radius: 0.1
+  m_Offset: {x: -0.015, y: -0.14}
+  m_Radius: 0.08
 --- !u!58 &1768181611816830940
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -165,7 +170,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 2.3
+  m_Radius: 2
 --- !u!195 &5711483375892405249
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -175,7 +180,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4407733809707112446}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.1
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -225,7 +230,7 @@ MonoBehaviour:
   health: 20
 --- !u!50 &9074269831224449128
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -236,8 +241,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 20
-  m_AngularDrag: 0.05
+  m_LinearDamping: 20
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -284,6 +289,42 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.06, y: 0}
-  m_Size: {x: 0.21, y: 0.52}
+  m_Offset: {x: -0.015, y: -0.05}
+  m_Size: {x: 0.18, y: 0.37}
   m_Direction: 0
+--- !u!95 &8129986127271057501
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407733809707112446}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04a265b1a80c5554e91be920a815a59e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6300363448966357883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407733809707112446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5890f615e64361ace8cab6eee626e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSortOrder
+  offset: 0
+  multiplier: 100

@@ -31,7 +31,7 @@ namespace Models.Cards
             
             foreach (var obj in objects)
             {
-                if (!obj.CompareTag(TeamType.Enemy.ToString())) continue;
+                if (!obj.CompareTag(nameof(TeamType.Enemy))) continue;
                 
                 var distance = (_player.position - obj.transform.position).sqrMagnitude;
                 if (distance >= minDistanceSqr) continue;

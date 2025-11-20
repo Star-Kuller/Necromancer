@@ -41,7 +41,7 @@ namespace Models.Cards
             projectileModel.ProjectileKey = $"{Type}_Projectile";
             projectileModel.Damage = damage;
             projectileModel.AttackTeam = TeamType.Enemy;
-            rb.velocity = direction * projectileSpeed;
+            rb.linearVelocity = direction * projectileSpeed;
         }
     }
 }

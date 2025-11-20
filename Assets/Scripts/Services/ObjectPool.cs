@@ -11,7 +11,7 @@ namespace Services
 {
     public class ObjectPool : MonoBehaviour, IObjectPool, IAutoRegistration
     {
-        private Dictionary<string, List<GameObject>> _pool = new();
+        private readonly Dictionary<string, List<GameObject>> _pool = new();
         
         public void Register()
         {
@@ -29,9 +29,9 @@ namespace Services
                 resetable.Reset();
             }
             target.transform.SetParent(transform);
-            if (_pool.ContainsKey(key))
+            if (_pool.TryGetValue(key, out var value))
             {
-                _pool[key].Add(target);
+                value.Add(target);
             }
             else
             {
@@ -40,7 +40,7 @@ namespace Services
         }
         
         // ReSharper disable Unity.PerformanceAnalysis
-        public GameObject Create(string key, GameObject prefab,Transform parent = default, bool isActive = true)
+        public GameObject Create(string key, GameObject prefab, Transform parent = null, bool isActive = true)
         {
             if (!_pool.TryGetValue(key, out var list)) return Create(prefab, parent, isActive);
             
@@ -54,7 +54,7 @@ namespace Services
             return obj;
         }
 
-        private static GameObject Create(GameObject prefab, [CanBeNull] Transform parent = default, bool isActive = true)
+        private static GameObject Create(GameObject prefab, [CanBeNull] Transform parent = null, bool isActive = true)
         {
             var prefabActive = prefab.activeSelf;
             prefab.SetActive(false);

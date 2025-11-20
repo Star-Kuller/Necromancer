@@ -32,12 +32,12 @@ namespace Services.EventBus
             _viewEvents[gameEventId].AddListener(action);
         }
 
-        public void CallEvent(GameEvent gameEventId, object parameters = default)
+        public void CallEvent(GameEvent gameEventId, object parameters = null)
         {
             _gameEvents[gameEventId].Invoke(parameters);
         }
 
-        public void CallEvent(ViewEvent gameEventId, object parameters = default)
+        public void CallEvent(ViewEvent gameEventId, object parameters = null)
         {
             _viewEvents[gameEventId].Invoke(parameters);
         }

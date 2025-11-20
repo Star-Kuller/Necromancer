@@ -20,7 +20,7 @@ namespace Models
             var vector = new Vector2(moveHorizontal, moveVertical);
             var movement = vector.normalized;
         
-            _rb.velocity = movement * (speed * Mathf.Clamp01(vector.magnitude));
+            _rb.linearVelocity = movement * (speed * Mathf.Clamp01(vector.magnitude));
         }
     }
 }
